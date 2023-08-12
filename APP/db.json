@@ -1,0 +1,37 @@
+{
+  "backgrounds": [],
+  "comments": [],
+  "posts": [],
+  "users": [
+    {
+      "phone": "11111",
+      "nickName": "Phạm Thành Đạo",
+      "password": "11111",
+      "avatar": "",
+      "background": "",
+      "type": "user",
+      "follower": [],
+      "following": [],
+      "info": {
+        "school": {
+          "name": "thanhdao02dd@gmail.com",
+          "show": false
+        },
+        "address": {
+          "name": "thai binh",
+          "show": false
+        },
+        "relationship": {
+          "name": "sinh vien",
+          "show": false
+        },
+        "work": {
+          "name": "0979022810",
+          "show": false
+        }
+      },
+      "isLock": false,
+      "id": 1
+    }
+  ]
+}

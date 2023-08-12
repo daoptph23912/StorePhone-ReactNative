@@ -1,0 +1,41 @@
+{
+  "name": "react_lgtuan",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/webpack-config": "^18.0.1",
+    "@react-native-async-storage/async-storage": "^1.18.1",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native-stack": "^6.9.12",
+    "@react-navigation/stack": "^6.3.16",
+    "expo": "~48.0.15",
+    "expo-av": "^13.2.1",
+    "expo-checkbox": "^2.3.1",
+    "expo-image-picker": "^14.1.1",
+    "expo-linear-gradient": "^12.1.2",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.71.8",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-reanimated": "^3.3.0",
+    "react-native-simple-toast": "^2.0.0",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-swiper": "^1.6.0",
+    "react-native-web": "~0.18.10",
+    "socket.io-client": "^4.6.2",
+    "string-similarity": "^4.0.4",
+    "stripe": "^12.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
