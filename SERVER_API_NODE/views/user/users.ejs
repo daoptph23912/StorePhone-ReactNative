@@ -1,0 +1,339 @@
+<div class="main-container d-flex">
+  <div class="sidebar" id="side-nav">
+    <div class="d-flex flex-column pt-3 pb-3 align-items-center">
+      <img class="header-avatar"
+        src="https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" />
+      <span class="fs-4 text-white">Phạm Thành Đạo</span>
+    </div>
+    <hr class="hr-side mx-2" />
+    <ul class="list-unstyled px-2">
+      <li class="">
+        <a href="/dashBoard" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+            class="fa-solid fa-house px-3"></i>Bảng điều khiển</a>
+      </li>
+      <li class="">
+        <a href="/products" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+          <i class="fa-solid fa-book px-3"></i>Sản phẩm
+        </a>
+      </li>
+      <li class="">
+        <a href="/category" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+          <i class="fa-solid fa-receipt px-3"></i>Danh mục
+        </a>
+      </li>
+      <li class="active">
+        <a href="/users" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+            class="fa-solid fa-users px-3"></i>Người dùng</a>
+      </li>
+      <li class="">
+        <a href="mess" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+            class="fa-solid fa-users px-3"></i>Message</a>
+      </li>
+    </ul>
+  </div>
+  <div class="topbar">
+    <a type="button" onclick="logout()" class="item-logout text-decoration-none">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+  </div>
+  <div class="main-content px-4" style="overflow: scroll">
+    <div class="header-content">
+      <span class="fs-4">Danh sách người dùng</span>
+      <div id="clock"></div>
+    </div>
+    <div class="table-container">
+      <div class="tool-container">
+        <button class="tool-button" style="color: #006a4a; background-color: #91ffae" data-bs-target="#addModal"
+          data-bs-toggle="modal">
+          <i class="fa-solid fa-plus"></i>
+          <span>Thêm người dùng</span>
+        </button>
+        <button class="tool-button" style="color: #006a6a; background-color: #8fffda">
+          <i class="fa-solid fa-file-excel"></i>
+          <span>Xuất excel</span>
+        </button>
+        <button class="tool-button" style="color: #07006a; background-color: #af8fff">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>Xuất pdf</span>
+        </button>
+      </div>
+      <hr />
+      <table id="userTable" class="table table-bordered table-hover" style="width: 100%">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Avatar</th>
+            <th>Email</th>
+            <th>Trạng thái</th>
+            <th>Vai trò</th>
+            <th>Chức năng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% userData.forEach(user=> { %>
+            <tr>
+              <td>
+                <%= user.id %>
+              </td>
+              <td>
+                <%= user.name %>
+              </td>
+              <td class="text-center">
+                <img class="avatar-img" src="<%= user.image %>" />
+              </td>
+              <td>
+                <%= user.email %>
+              </td>
+              <% if(user.status==='active' ){ %>
+                <td style="color: #00a803;">
+                  <%= user.status %>
+                </td>
+                <% } else if(user.status==='inactive' ) { %>
+                  <td style="color: #ff0000;">
+                    <%= user.status %>
+                  </td>
+                  <% } %>
+
+                    <td>
+                      <%= user.type %>
+                    </td>
+                    <td class="text-center">
+                      <button class="btn btn-primary btn-sm trash" type="button" data-bs-toggle="modal"
+                        data-bs-target="#comfirmDeleteModal" onclick="onDelete('<%= user._id %>')">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                      <button class="btn btn-primary btn-sm edit" type="button" data-bs-toggle="modal"
+                        data-bs-target="#editModal" onclick="onEditClick('<%= user._id %>','<%= user.name %>','<%= user.email %>','<%= user.password %>',
+                        '<%= user.image %>','<%= user.type %>','<%= user.status %>',)">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Moda -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form class="modal-content" action="/users/edit" method="post" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5>Chỉnh sửa người dùng</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="form-group">
+            <label class="control-label">ID</label>
+            <input class="form-control" type="text" required value="" name="id" id="idInput" readonly />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Tên</label>
+            <input class="form-control" type="text" required value="" name="name" id="nameInput" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Email</label>
+            <input class="form-control" type="text" required value="" name="email" id="emailInput" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Mật khẩu</label>
+            <input class="form-control" type="text" required value="" name="password" id="passwordInput" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Vai trò</label>
+            <select class="form-select" name="type" id="typeSelect">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Trạng thái</label>
+            <select class="form-select" name="status" id="statusSelect">
+              <option selected value="active">Active</option>
+              <option value="inactive">InActive</option>
+            </select>
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Hình ảnh</label>
+            <input class="form-control" type="file" value="" name="image" id="imageInput" />
+            <img style="max-width: 100px; max-height: 200px;" id="imgPreview"
+              src="https://www.selikoff.net/blog-files/null-value.gif" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-save" type="submit">Cập nhật</button>
+        <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">
+          Hủy bỏ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form class="modal-content" action="/users/add" method="post" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5>Thêm người dùng</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="form-group">
+            <label class="control-label">Tên</label>
+            <input class="form-control" type="text" required value="" name="name" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Email</label>
+            <input class="form-control" type="text" required value="" name="email" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Mật khẩu</label>
+            <input class="form-control" type="text" required value="" name="password" />
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Vai trò</label>
+            <select class="form-select" name="type">
+              <option value="user">User</option>
+            </select>
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Trạng thái</label>
+            <select class="form-select" name="status">
+              <option selected value="active">Active</option>
+              <option value="inactive">InActive</option>
+            </select>
+          </div>
+          <div class="form-group mt-3">
+            <label class="control-label">Hình ảnh</label>
+            <input class="form-control" type="file" required value="" name="image" id="imageInput2" />
+            <img style="max-width: 100px; max-height: 200px;" id="imgPreview2"
+              src="https://www.selikoff.net/blog-files/null-value.gif" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-save" type="submit">Lưu lại</button>
+        <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">
+          Hủy bỏ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="comfirmDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <form class="modal-dialog" action="/users/delete" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <a class="fw-bold text-decoration-none text-danger">Xóa người dùng có id : </a>
+        <input id="deleteIdtxt" class="form-control" name="id" readonly>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Moda -->
+
+<script src="/jquery/jquery.js"></script>
+<script src="/jquery/jquery.table.js"></script>
+
+<script>
+
+  var imgInput = document.getElementById('imageInput')
+  imgInput.addEventListener('change', function () {
+    var previewImg = document.getElementById('imgPreview')
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', function () {
+      previewImg.src = reader.result;
+    });
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  })
+
+  var imgInput2 = document.getElementById('imageInput2')
+  imgInput2.addEventListener('change', function () {
+    var previewImg = document.getElementById('imgPreview2')
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', function () {
+      previewImg.src = reader.result;
+    });
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  })
+
+  $(document).ready(function () {
+    $("#userTable").DataTable({
+      language: {
+        paginate: {
+          previous: "Trước",
+          next: "Sau",
+        },
+        search: "Tìm kiếm:",
+        lengthMenu: "Hiển thị _MENU_ mục",
+        info: "Đang hiển thị _START_ đến _END_ trong tổng số _TOTAL_ mục",
+        infoEmpty: "Không có mục nào để hiển thị",
+        infoFiltered: "(được lọc từ tổng số _MAX_ mục)",
+        emptyTable: "Không có mục nào để hiển thị",
+        zeroRecords: "Không có mục nào khớp",
+      },
+      sDom: '<"top"lBf><"clear">rt<"bottom"ip><"clear">',
+      sPaginationType: "full_numbers",
+      columnDefs: [{ orderable: false, targets: [2, 3, 4, 5, 6] }],
+    });
+  });
+
+  function onEditClick(id, name, email, password, image, type, status) {
+    var idInput = document.getElementById('idInput')
+    var nameInput = document.getElementById('nameInput')
+    var emailInput = document.getElementById('emailInput')
+    var passwordInput = document.getElementById('passwordInput')
+    var imgPreview = document.getElementById('imgPreview')
+    var typeSelect = document.getElementById('typeSelect')
+    var statusSelect = document.getElementById('statusSelect')
+
+    idInput.value = id
+    nameInput.value = name
+    emailInput.value = email
+    passwordInput.value = password
+    imgPreview.src = image
+
+    for (let i = 0; i < typeSelect.options.length; i++) {
+      if (typeSelect.options[i].value.toLowerCase() == type) {
+        typeSelect.selectedIndex = i
+        break
+      }
+    }
+    for (let i = 0; i < statusSelect.options.length; i++) {
+      if (statusSelect.options[i].value.toLowerCase() == status) {
+        statusSelect.selectedIndex = i
+        break
+      }
+    }
+  }
+
+  function onDelete(id) {
+    var txt = document.getElementById('deleteIdtxt')
+    txt.value = id
+  }
+</script>

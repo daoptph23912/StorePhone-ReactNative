@@ -1,0 +1,199 @@
+<div class="main-container d-flex">
+  <div class="sidebar" id="side-nav">
+    <div class="d-flex flex-column pt-3 pb-3 align-items-center">
+      <img class="header-avatar"
+        src="https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" />
+      <span class="fs-4 text-white">Phạm Thành Đạo</span>
+    </div>
+    <hr class="hr-side mx-2" />
+    <ul class="list-unstyled px-2">
+      <li class="">
+        <a href="/dashBoard" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+            class="fa-solid fa-house px-3"></i>Bảng điều khiển
+        </a>
+      </li>
+      <li class="active">
+        <a href="/products" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+          <i class="fa-solid fa-book px-3"></i>Sản phẩm
+        </a>
+      </li>
+      <li class="">
+        <a href="/category" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+          <i class="fa-solid fa-receipt px-3"></i>Danh mục
+        </a>
+      </li>
+      <li class="">
+        <a href="/users" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+            class="fa-solid fa-users px-3"></i>Người dùng</a>
+      </li>
+      <li class="">
+        <a href="mess" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+            class="fa-solid fa-users px-3"></i>Message</a>
+      </li>
+    </ul>
+  </div>
+  <div class="topbar">
+    <a type="button" onclick="logout()" class="item-logout text-decoration-none">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+  </div>
+  <div class="main-content px-4" style="overflow: scroll">
+    <div class="header-content">
+      <span class="fs-4">Danh sách sản phẩm</span>
+      <div id="clock"></div>
+    </div>
+    <div class="table-container">
+      <div class="tool-container">
+        <a href="/products/add" class="tool-button text-decoration-none"
+          style="color: #006a4a; background-color: #91ffae">
+          <i class="fa-solid fa-plus"></i>
+          <span>Thêm sản phẩm</span>
+        </a>
+        <button class="tool-button" style="color: #006a6a; background-color: #8fffda">
+          <i class="fa-solid fa-file-excel"></i>
+          <span>Xuất excel</span>
+        </button>
+        <button class="tool-button" style="color: #07006a; background-color: #af8fff">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>Xuất pdf</span>
+        </button>
+      </div>
+      <hr />
+      <div class="row d-flex align-items-center" style="justify-content: space-between;">
+        <div class="row d-flex align-items-center pb-3" style="width: auto;">
+          <label style="width: auto;" class="fw-bold">Thể loại :</label>
+          <select id="category-filter" class="form-select" style="width: 200px;">
+            <option value="">Tất cả thể loại</option>
+            <% categories.forEach(item=> { %>
+
+              <option value="<%= item.name %>">
+                <%= item.name %>
+              </option>
+              <%}) %>
+          </select>
+        </div>
+        <form class="row d-flex align-items-center pb-3" style="width: auto;">
+          <label style="width: auto;" class="fw-bold">Số lượng :</label>
+          <select name="quantityOperator" class="form-select" style="width:90px;">
+            <option value="">Chọn</option>
+            <option <%=(quantityOperator=='gt' ) ? 'selected' : '' %> value="gt">&gt=</option>
+            <option <%=(quantityOperator=='lt' ) ? 'selected' : '' %> value="lt">&lt=</option>
+          </select>
+          <input type="number" class="form-control ms-3" style="width: 120px;" name="quantity" value="<%= quantity %>">
+          <label style="width: auto;" class="fw-bold">Giá tiền :</label>
+          <select name="priceOperator" class="form-select" style="width:90px;">
+            <option value="">Chọn</option>
+            <option <%=(priceOperator=='gt' ) ? 'selected' : '' %> value="gt">&gt=</option>
+            <option <%=(priceOperator=='lt' ) ? 'selected' : '' %> value="lt">&lt=</option>
+          </select>
+          <input type="number" class="form-control ms-3" style="width: 120px;" name="price" value="<%= price %>">
+          <button type="submit" style="width: 80px;" class="btn btn btn-outline-dark ms-1">Lọc</button>
+        </form>
+      </div>
+      <table id="productTable" class="table table-bordered table-hover" style="width: 100%">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Danh mục</th>
+            <th>Hình ảnh</th>
+            <th>Số lượng</th>
+            <th>Giá tiền</th>
+            <th>Chức năng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% productData.map((product)=>{ %>
+            <tr>
+              <td style="width: 200px;">
+                <a href="/products/<%= product._id %>" class="text-black">
+                  <%= product._id %>
+                </a>
+              </td>
+              <td style="max-width: 150px;">
+                <%= product.name %>
+              </td>
+              <td>
+                <%= product.cartId.name %>
+              </td>
+              <td class="text-center">
+                <img class="product-img" src="<%= product.image %>" />
+              </td>
+              <td>
+                <%= product.quantity %>
+              </td>
+              <td>
+                <%= product.price %>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-primary btn-sm trash" data-bs-toggle="modal" data-bs-target="#comfirmDeleteModal"
+                  onclick="onDelete('<%= product._id %>')">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+                <a class="btn btn-primary btn-sm edit" href="/products/edit/<%= product._id %>">
+                  <i class="fas fa-edit"></i>
+                </a>
+              </td>
+            </tr>
+            <%})%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="comfirmDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <form class="modal-dialog" action="/products/delete" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <a class="fw-bold text-decoration-none text-danger">Xóa sản phẩm có id : </a>
+        <input id="deleteIdtxt" class="form-control" name="id" readonly>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="/jquery/jquery.js"></script>
+<script src="/jquery/jquery.table.js"></script>
+<script>
+  $(document).ready(function () {
+    var table = $("#productTable").DataTable({
+      language: {
+        paginate: {
+          previous: "Trước",
+          next: "Sau",
+        },
+        search: "Tìm kiếm:",
+        lengthMenu: "Hiển thị _MENU_ mục",
+        info: "Đang hiển thị _START_ đến _END_ trong tổng số _TOTAL_ mục",
+        infoEmpty: "Không có mục nào để hiển thị",
+        infoFiltered: "(được lọc từ tổng số _MAX_ mục)",
+        emptyTable: "Không có mục nào để hiển thị",
+        zeroRecords: "Không có mục nào khớp",
+      },
+      sDom: '<"top"lBf><"clear">rt<"bottom"ip><"clear">',
+      sPaginationType: "full_numbers",
+      columnDefs: [{ orderable: false, targets: [2, 3, 6] }],
+    });
+
+    $('#category-filter').on('change', function () {
+      var category = $(this).val();
+      table.column(2).search(category).draw();
+    });
+  });
+
+
+  function onDelete(id) {
+    var txt = document.getElementById('deleteIdtxt')
+    txt.value = id
+  }
+</script>

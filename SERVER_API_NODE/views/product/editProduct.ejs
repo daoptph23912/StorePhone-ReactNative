@@ -1,0 +1,117 @@
+<div class="main-container d-flex">
+    <div class="sidebar" id="side-nav">
+        <div class="d-flex flex-column pt-3 pb-3 align-items-center">
+            <img class="header-avatar"
+                src="https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" />
+            <span class="fs-4 text-white">Phạm Thành Đạo</span>
+        </div>
+        <hr class="hr-side mx-2" />
+        <ul class="list-unstyled px-2">
+            <li class="">
+                <a href="/dashBoard" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+                        class="fa-solid fa-house px-3"></i>Bảng điều khiển
+                </a>
+            </li>
+            <li class="active">
+                <a href="/products" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+                    <i class="fa-solid fa-book px-3"></i>Sản phẩm
+                </a>
+            </li>
+            <li class="">
+                <a href="/category" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+                    <i class="fa-solid fa-receipt px-3"></i>Danh mục
+                </a>
+            </li>
+            <li class="">
+                <a href="/users" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+                        class="fa-solid fa-users px-3"></i>Người dùng</a>
+            </li>
+            <li class="">
+                <a href="mess" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+                    class="fa-solid fa-users px-3"></i>Message</a>
+              </li>
+        </ul>
+    </div>
+    <div class="topbar">
+        <a type="button" onclick="logout()" class="item-logout text-decoration-none">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+    </div>
+    <div class="main-content px-4" style="overflow: scroll">
+        <div class="header-content">
+            <span class="fs-4">Chỉnh sửa sản phẩm</span>
+            <div id="clock"></div>
+        </div>
+
+        <div class="table-container">
+
+            <h1>
+                <%= msg %>
+            </h1>
+
+            <form class="row" action="/products/edit/<%= product._id %>" method="post" enctype="multipart/form-data">
+                <div class="col-8">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Chỉnh sửa sản phẩm</label>
+                        <input type="text" class="form-control" name="name" value="<%= product.name %>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Thể loại</label>
+                        <select class="form-select" name="cartId">
+                            <% categories.forEach( category=> {%>
+                                <option <%=(String(category._id)==String(product.cartId)) ? 'selected' : '' %> value="
+                                    <%= category._id %>">
+                                        <%= category.name %>
+                                </option>
+                                <%}) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Giá tiền</label>
+                        <input type="number" class="form-control" name="price" value="<%= product.price %>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Số lượng</label>
+                        <input type="number" class="form-control" name="quantity" value="<%= product.quantity %>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mô tả</label>
+                        <textArea rows="3" type="text" class="form-control"
+                            name="content"><%= product.content %></textArea>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Hình ảnh</label>
+                        <input id="img-input" type="file" class="form-control" name="image">
+                        <img id="img-display" class="pt-2" style="max-height: 400px;max-width: 300px"
+                            src="<%= product.image %>" />
+                    </div>
+                </div>
+                <div class="d-flex col-12" style="justify-content: flex-end;">
+                    <button type="submit" class="btn" style="width: 300px; color: white;background-color: #001c40;">Cập
+                        nhật</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var imgInput = document.getElementById('img-input')
+    var previewImg = document.getElementById('img-display')
+
+    imgInput.addEventListener('change', function () {
+        const file = this.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', function () {
+            previewImg.src = reader.result;
+        });
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    })
+</script>

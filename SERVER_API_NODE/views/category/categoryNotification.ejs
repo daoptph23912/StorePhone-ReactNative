@@ -1,0 +1,50 @@
+<div class="main-container d-flex">
+    <div class="sidebar" id="side-nav">
+        <div class="d-flex flex-column pt-3 pb-3 align-items-center">
+            <img class="header-avatar"
+                src="https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" />
+            <span class="fs-4 text-white">Phạm Thành Đạo</span>
+        </div>
+        <hr class="hr-side mx-2" />
+        <ul class="list-unstyled px-2">
+            <li class="">
+                <a href="/dashBoard" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+                        class="fa-solid fa-house px-3"></i>Bảng điều khiển</a>
+            </li>
+            <li class="">
+                <a href="/products" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+                    <i class="fa-solid fa-book px-3"></i>Sản phẩm
+                </a>
+            </li>
+            <li class="active">
+                <a href="/category" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1">
+                    <i class="fa-solid fa-receipt px-3"></i>Danh mục
+                </a>
+            </li>
+            <li class="">
+                <a href="/users" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+                        class="fa-solid fa-users px-3"></i>Người dùng</a>
+            </li>
+            <li class="">
+                <a href="mess" class="text-decoration-none d-block pt-3 pb-3 mt-2 px-1"><i
+                    class="fa-solid fa-users px-3"></i>Message</a>
+              </li>
+        </ul>
+    </div>
+    <div class="topbar">
+        <a type="button" onclick="logout()" class="item-logout text-decoration-none">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+    </div>
+    <div class="main-content px-4" style="overflow: scroll">
+        <div class="header-content">
+            <span class="fs-4">Danh sách sản phẩm</span>
+            <div id="clock"></div>
+        </div>
+        <div class="table-container">
+            <h1>
+                <%= msg %>
+            </h1>
+        </div>
+    </div>
+</div>

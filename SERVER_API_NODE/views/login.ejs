@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="shortcut icon" type="image/png" href="images/heckar.png" />
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="stylesheets/index.css" />
+  <style>
+    body {
+      background-image: -webkit-linear-gradient(top right, #307ab7, #824aad);
+      background-image: -moz-linear-gradient(top right, #307ab7, #824aad);
+      background-image: -o-linear-gradient(top right, #307ab7, #824aad);
+      background-image: linear-gradient(to bottom right, #307ab7, #824aad);
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <form class="login-form" method="post">
+      <div class="mb-5 mt-3">
+        <h1>Login</h1>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-bold text-danger">
+          <%= msg %>
+        </label>
+      </div>
+      <div class="mb-3">
+        <label for="accountInput" class="form-label">Email</label>
+        <input type="email" class="form-control" id="accountInput" name="email" required value='<%= email %>' />
+      </div>
+      <div class="mb-3">
+        <label for="passwordInput" class="form-label">Password</label>
+        <input type="password" class="form-control" id="passwordInput" name="passwd" required value='<%= passwd %>' />
+      </div>
+      <button type="submit" class="btn-login">
+        Login
+      </button>
+    </form>
+  </div>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="javascripts/app.js"></script>
+</body>
+
+</html>
