@@ -1,3 +1,5 @@
-# Đây là mình tự làm không phải clone của người khác ạ.
-# Ứng dụng của chúng tôi là một nền tảng mua bán điện thoại sử dụng Node.js và React Native để cung cấp trải nghiệm mua sắm trực tuyến đơn giản và tiện lợi.
-# Ứng dụng có đầy đủ app người dùng và web quản trị .
+-  Đây là mình tự làm không phải clone của người khác ạ.
+ - Ứng dụng của chúng tôi là một nền tảng mua bán điện thoại sử dụng Node.js và React Native để cung cấp trải nghiệm mua sắm trực tuyến đơn giản và tiện lợi.
+ - Ứng dụng có đầy đủ app người dùng và web quản trị .
+- App người dùng gồm có chức năng đăng nhập , đăng kí , đăng xuất , thêm vào giỏ hàng , thanh toán chưa tích hợp với vnpay,  xem thông tin chi tiết sản phẩm , thanh toán , tìm kiếm sản phẩm theo giá or tên sản phẩm ,...
+- Web quản trị có đăng nhập , đăng kí , đăng xuất, quản lí đớn hàng, quản lí sản phẩm, quản lí người dùng , ... 
